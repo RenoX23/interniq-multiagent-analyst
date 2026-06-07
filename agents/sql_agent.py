@@ -6,6 +6,9 @@ from langchain_core.messages import HumanMessage
 from db.connection import run_query
 from prompts.few_shot import build_prompt
 
+
+
+
 load_dotenv()
 
 llm = ChatGroq(
