@@ -1,52 +1,36 @@
+import os
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+from dotenv import load_dotenv
+from langchain_groq import ChatGroq
+from langchain_core.messages import HumanMessage
 
-def run_viz_agent(results: list[dict], question: str) -> go.Figure:
+load_dotenv()
+
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
+    api_key=os.getenv("GROQ_API_KEY"),
+    temperature=0.3
+)
+
+def run_insight_agent(question: str, sql: str, results: list[dict]) -> str:
     if not results:
-        return None
+        return "No data returned. Try rephrasing your question."
 
     df = pd.DataFrame(results)
-    cols = df.columns.tolist()
-    q = question.lower()
+    summary = df.head(10).to_string(index=False)
 
-    # Detect numeric and categorical columns
-    num_cols = df.select_dtypes(include="number").columns.tolist()
-    cat_cols = df.select_dtypes(exclude="number").columns.tolist()
+    prompt = f"""You are a business analyst for an internship market platform.
 
-    if not num_cols:
-        return None
+User asked: {question}
 
-    x_col = cat_cols[0] if cat_cols else cols[0]
-    y_col = num_cols[0]
+SQL used: {sql}
 
-    # Chart type selection logic
-    if any(w in q for w in ["trend", "over time", "monthly", "weekly", "posted"]):
-        fig = px.line(df, x=x_col, y=y_col, title=question)
+Top results:
+{summary}
 
-    elif any(w in q for w in ["distribution", "remote", "vs", "ratio", "type"]):
-        fig = px.pie(df, names=x_col, values=y_col, title=question)
+Write 2-3 sentences of sharp business insight from this data.
+Focus on what's actionable for a job seeker or recruiter.
+No filler. No restating the question. Just insight."""
 
-    elif any(w in q for w in ["compare", "range", "min", "max", "stipend"]) and len(num_cols) >= 2:
-        fig = px.bar(
-            df, x=x_col, y=num_cols,
-            barmode="group", title=question
-        )
-
-    else:
-        # Default: horizontal bar (best for ranked lists)
-        df_sorted = df.sort_values(y_col, ascending=True).tail(15)
-        fig = px.bar(
-            df_sorted, x=y_col, y=x_col,
-            orientation="h", title=question
-        )
-
-    fig.update_layout(
-        plot_bgcolor="#0f1117",
-        paper_bgcolor="#0f1117",
-        font_color="#ffffff",
-        title_font_size=14,
-        margin=dict(l=20, r=20, t=40, b=20)
-    )
-
-    return fig
+    response = llm.invoke([HumanMessage(content=prompt)])
+    return response.content.strip()
