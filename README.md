@@ -32,13 +32,13 @@ SQL queries, visualisations, and sharp business insights — automatically, with
 
 ### Average Stipend by Category
 ![Avg Stipend](assets/avg_stipend.png)
-![Avg Stipend Visual](assets/avg_stipend_visuals.png)
+![Avg Stipend Visual](assets/avg_stipend_visual.png)
 
 ### City-wise Opportunities
 ![Cities](assets/city_opportunities.png)
 
 ### Remote vs On-site Distribution
-![Remote vs Onsite](assets/remote_vs__onsite.png)
+![Remote vs Onsite](assets/remote_vs_onsite.png)
 
 ### Top Companies Hiring for Data Science
 ![Top DS Companies](assets/top_company_DS.png)
