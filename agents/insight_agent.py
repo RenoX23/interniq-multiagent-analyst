@@ -3,12 +3,12 @@ import pandas as pd
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage
-
+from db.connection import get_config
 load_dotenv()
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
-    api_key=os.getenv("GROQ_API_KEY"),
+    api_key=get_config("GROQ_API_KEY"),
     temperature=0.3
 )
 
