@@ -4,6 +4,8 @@
 > An autonomous analytics pipeline that answers natural language business questions
 > about India's internship market using a 4-agent LangGraph architecture.
 
+🌐 **Live App:** [https://interniq-multiagent-analyst-renox23.streamlit.app/](https://interniq-multiagent-analyst-renox23.streamlit.app/)
+
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)](https://interniq-multiagent-analyst-renox23.streamlit.app/)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python)](https://python.org)
 [![LangGraph](https://img.shields.io/badge/LangGraph-Multi--Agent-1C3C3C?style=for-the-badge)](https://langchain-ai.github.io/langgraph/)
@@ -185,4 +187,3 @@ streamlit run app.py
 Microsoft Learn Student Ambassador · Published Researcher (IJIRT 2025)
 
 [![GitHub](https://img.shields.io/badge/GitHub-RenoX23-181717?style=flat&logo=github)](https://github.com/RenoX23)
-```
